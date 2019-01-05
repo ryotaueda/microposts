@@ -1,20 +1,17 @@
 class UsersController < ApplicationController
+  before_action :require_user_logged_in, only: [:index, :show]  # ログイン認証
   
-  # ログイン認証
-  before_action :require_user_logged_in, only: [:index, :show]
-  
-  def index
-    # ユーザー一覧
+  def index  # ユーザ一覧
     @users = User.all.page(params[:page])
   end
 
-  def show
-    # ユーザー詳細
+  def show  # ユーザ詳細
     @user = User.find(params[:id])
+    @microposts = @user.microposts.order('created_at DESC').page(params[:page])
+    counts(@user)
   end
 
-  def new
-    # ユーザー登録フォーム
+  def new  # ユーザ登録フォーム
     @user = User.new
   end
 

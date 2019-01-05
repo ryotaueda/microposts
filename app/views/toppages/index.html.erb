@@ -1,9 +1,20 @@
 <!-- トップページ -->
 
-<% if logged_in? %>
-  <p>ログイン完了ユーザ: <%= current_user.name %></p>
-<% else %>
-
+<% if logged_in? %>  <!-- ログインされていたら -->
+  <div class="row">
+    <aside class="col-md-4">  <!-- micropost用のフォーム -->
+      <%= form_for(@micropost) do |f| %>
+        <div class="form-group">
+          <%= f.text_area :content, class: 'form-control', rows: 5 %>
+        </div>
+        <%= f.submit 'Post', class: 'btn btn-primary btn-block' %>
+      <% end %>
+    </aside>
+    <div class="col-xs-8">  <!-- _microposts.html.erbを読み込んで一覧表示 -->
+      <%= render 'microposts/microposts', microposts: @microposts %>
+    </div>
+  </div>
+<% else %>  <!-- ログインされていなかったら -->
   <div class="center jumbotron">
     <div class="text-center">
       <h1>Welcome to the Microposts</h1>

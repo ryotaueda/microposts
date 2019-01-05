@@ -12,4 +12,8 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def counts(user)  # Micropostの数のカウントをViewで表示するときのため。
+    @count_microposts = user.microposts.count
+  end
+  
 end
